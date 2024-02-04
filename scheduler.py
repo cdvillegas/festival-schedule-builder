@@ -2,15 +2,14 @@ from model import Artist, Show, Schedule
 from random import randint, sample, choice
 
 class Scheduler:
-    def __init__(self, schedule, iterations=4000):
+    def __init__(self, schedule):
         self.schedule = schedule
-        self.iterations = iterations
 
-    def optimize_schedule(self):
+    def optimize_schedule(self, iterations=1000):
         current_schedule = Schedule([])
         current_rank = self.calculate_total_rank(current_schedule)
 
-        for i in range(self.iterations):
+        for i in range(iterations):
             print(f"Current rank at iteration {i}: {current_rank}")
             new_schedule = self.add_or_swap_show(current_schedule)
             if self.is_schedule_valid(new_schedule):

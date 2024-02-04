@@ -16,8 +16,8 @@ def optimize():
 
         # Optimize each schedule
         for schedule in festival.schedules:
-            scheduler = Scheduler(schedule=schedule, iterations=10000)
-            optimized_schedule = scheduler.optimize_schedule()
+            scheduler = Scheduler(schedule=schedule)
+            optimized_schedule = scheduler.optimize_schedule(iterations=10000)
             
             schedule.shows = optimized_schedule.shows
 
