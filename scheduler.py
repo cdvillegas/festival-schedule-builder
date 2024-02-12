@@ -1,5 +1,5 @@
-from model import Artist, Show, Schedule
-from random import randint, choice
+from model import Schedule
+from random import choice
 
 class Scheduler:
     def __init__(self, schedule):
@@ -19,19 +19,7 @@ class Scheduler:
         current_schedule.shows.sort(key=lambda show: show.start_time)
 
         return current_schedule
-
-    @staticmethod
-    def calculate_total_rank(schedule):
-        return sum(show.rank for show in schedule.shows)
-
-    @staticmethod
-    def is_schedule_valid(schedule):
-        sorted_shows = sorted(schedule.shows, key=lambda show: show.start_time)
-        for i in range(1, len(sorted_shows)):
-            if sorted_shows[i].start_time < sorted_shows[i-1].end_time:
-                return False
-        return True
-
+    
     def add_or_swap_show(self, schedule):
         current_rank = self.calculate_total_rank(schedule)  # Pass Schedule object
 
@@ -67,37 +55,17 @@ class Scheduler:
         return schedule
 
     @staticmethod
+    def calculate_total_rank(schedule):
+        return sum(show.rank for show in schedule.shows)
+
+    @staticmethod
+    def is_schedule_valid(schedule):
+        sorted_shows = sorted(schedule.shows, key=lambda show: show.start_time)
+        for i in range(1, len(sorted_shows)):
+            if sorted_shows[i].start_time < sorted_shows[i-1].end_time:
+                return False
+        return True
+
+    @staticmethod
     def timedelta_hours(td):
-        return td.total_seconds() / 3600  # Convert seconds to hours
-
-    # Assuming the Scheduler class definition is available in your environment
-    def analyze_schedule(self, schedule):
-        # Determine top artists from the initial list
-        top_shows = [show for show in self.schedule.shows if show.rank >= 5]
-        scheduled_top_shows = [show for show in schedule if show.rank >= 5]
-
-        # Calculate the proportion of top artists scheduled
-        proportion_scheduled = str(f"{len(scheduled_top_shows)} / {len(top_shows)}")
-
-        # Find top artists not scheduled
-        top_shows_not_scheduled = [show for show in top_shows if show not in scheduled_top_shows]
-
-        return proportion_scheduled, top_shows_not_scheduled
-
-    def create_test_shows(self, n):
-        shows = []
-        top_n = int(n * 0.1)
-
-        for i in range(top_n):
-            artist = Artist(f"Top Artist {i+1}", 5)
-            start = randint(0, 22)
-            end = start + 2
-            shows.append(Show(artist, start, end))
-
-        for i in range(top_n, n):
-            artist = Artist(f"Artist {i+1 + top_n}", randint(1, 4))
-            start = randint(0, 22)
-            end = start + 2
-            shows.append(Show(artist, start, end))
-
-        return shows
+        return td.total_seconds() / 3600

@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from marshmallow import ValidationError
 from schema import FestivalSchema
 from scheduler import Scheduler
-from model import Festival
 
 app = Flask(__name__)
 
