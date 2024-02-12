@@ -1,20 +1,20 @@
 class Artist:
-    def __init__(self, name, rank):
+    def __init__(self, name):
         self.name = name
-        self.rank = rank
 
     def __repr__(self):
-        return f"Artist(name={self.name}, rank={self.rank})"
+        return f"Artist(name={self.name})"
 
 
 class Show:
-    def __init__(self, artist, start_time, end_time):
+    def __init__(self, artist, start_time, end_time, rank):
         self.artist = artist
         self.start_time = start_time
         self.end_time = end_time
+        self.rank = rank
 
     def __repr__(self):
-        return f"Show(artist={self.artist}, start_time={self.start_time}, end_time={self.end_time})"
+        return f"Show(artist={self.artist}, start_time={self.start_time}, end_time={self.end_time}, rank={self.rank})"
 
 
 class Schedule:

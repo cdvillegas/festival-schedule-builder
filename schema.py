@@ -4,7 +4,6 @@ from model import *
 
 class ArtistSchema(Schema):
     name = fields.Str()
-    rank = fields.Int()
 
     @post_load
     def make_artist(self, data, **kwargs):
@@ -15,6 +14,7 @@ class ShowSchema(Schema):
     artist = fields.Nested(ArtistSchema)
     start_time = fields.Str()
     end_time = fields.Str()
+    rank = fields.Int()
 
     @post_load
     def make_show(self, data, **kwargs):

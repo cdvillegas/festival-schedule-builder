@@ -1,5 +1,5 @@
 from model import Artist, Show, Schedule
-from random import randint, sample, choice
+from random import randint, choice
 
 class Scheduler:
     def __init__(self, schedule):
@@ -10,18 +10,19 @@ class Scheduler:
         current_rank = self.calculate_total_rank(current_schedule)
 
         for i in range(iterations):
-            print(f"Current rank at iteration {i}: {current_rank}")
             new_schedule = self.add_or_swap_show(current_schedule)
             if self.is_schedule_valid(new_schedule):
                 new_rank = self.calculate_total_rank(new_schedule)
                 if new_rank > current_rank:
                     current_schedule, current_rank = new_schedule, new_rank
+        
+        current_schedule.shows.sort(key=lambda show: show.start_time)
 
         return current_schedule
 
     @staticmethod
     def calculate_total_rank(schedule):
-        return sum(show.artist.rank for show in schedule.shows)
+        return sum(show.rank for show in schedule.shows)
 
     @staticmethod
     def is_schedule_valid(schedule):
@@ -72,8 +73,8 @@ class Scheduler:
     # Assuming the Scheduler class definition is available in your environment
     def analyze_schedule(self, schedule):
         # Determine top artists from the initial list
-        top_shows = [show for show in self.schedule.shows if show.artist.rank >= 5]
-        scheduled_top_shows = [show for show in schedule if show.artist.rank >= 5]
+        top_shows = [show for show in self.schedule.shows if show.rank >= 5]
+        scheduled_top_shows = [show for show in schedule if show.rank >= 5]
 
         # Calculate the proportion of top artists scheduled
         proportion_scheduled = str(f"{len(scheduled_top_shows)} / {len(top_shows)}")
